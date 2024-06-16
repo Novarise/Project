@@ -15,11 +15,11 @@ const ModalProvider = () => {
     return null;
   }
 
-  return ( 
+  return (
     <>
       <PreviewModal />
     </>
-   );
-}
- 
+  );
+};
+
 export default ModalProvider;

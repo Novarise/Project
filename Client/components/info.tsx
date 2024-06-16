@@ -8,15 +8,15 @@ import useCart from "@/hooks/use-cart";
 import { Button } from "./ui/button";
 
 interface InfoProps {
-  data: Product
-};
+  data: Product;
+}
 
 const Info: React.FC<InfoProps> = ({ data }) => {
   const cart = useCart();
 
   const onAddToCart = () => {
     cart.addItem(data);
-  }
+  };
 
   return (
     <div>
@@ -28,18 +28,15 @@ const Info: React.FC<InfoProps> = ({ data }) => {
       </div>
       <hr className="my-4" />
       <div className="flex flex-col gap-y-6">
-        {
-          Object.keys(data.detail[0].dynamicProperties).map((key) => (
-            key !== '_id' && (
-            <div key={key} className="flex items-center gap-x-4">
-              <h3 className="font-semibold ">{key}:</h3>
-              <div>
-                {data.detail[0].dynamicProperties.Size}
+        {Object.keys(data.detail[0].dynamicProperties).map(
+          (key) =>
+            key !== "_id" && (
+              <div key={key} className="flex items-center gap-x-4">
+                <h3 className="font-semibold ">{key}:</h3>
+                <div>{data.detail[0].dynamicProperties.Size}</div>
               </div>
-            </div>
-            )
-          ))
-        }
+            ),
+        )}
 
         {/* <div className="flex items-center gap-x-4">
           <h3 className="font-semibold text-black">Color:</h3>
@@ -54,6 +51,6 @@ const Info: React.FC<InfoProps> = ({ data }) => {
       </div>
     </div>
   );
-}
+};
 
 export default Info;

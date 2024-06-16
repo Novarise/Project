@@ -12,7 +12,7 @@ interface QueryParams {
 const getProducts = async (queryParams: QueryParams): Promise<any> => {
   const url = qs.stringifyUrl({
     url: BASE_URL,
-    query: { 
+    query: {
       isFeatured: queryParams.isFeatured,
       isArchived: queryParams.isArchived,
       categoryId: queryParams.categoryId,

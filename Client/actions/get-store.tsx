@@ -1,4 +1,3 @@
-
 // const URL=`http://localhost:3000/api/${process.env.STORE}`;
 // const URL=`http://localhost:3000/api/${process.env.PORTLAND_STORE}`;
 // const getServerSideProps = async (): Promise<any> => {
@@ -9,22 +8,21 @@
 
 import axios from "axios";
 
-
 // const URL=`http://localhost:3000/api/${process.env.PORTLAND_STORE}`;
 // const URL=`http://${process.env.ADMIN_CONTAINER_HOST}:3000/api/${process.env.PORTLAND_STORE}`;
 
- const getServerSideProps = async (): Promise<any> => {
-   try {
-
-     const URL=`${process.env.ADMIN_CONTAINER_HOST}/api/${process.env.PORTLAND_STORE}`;
-     const res = await axios.get(URL, { headers: { 'Cache-Control': 'no-cache' } });
-     return res.data;
-   } catch (error) {
-     console.error(error);
-   }
- }
- export default getServerSideProps;
-
+const getServerSideProps = async (): Promise<any> => {
+  try {
+    const URL = `${process.env.ADMIN_CONTAINER_HOST}/api/${process.env.PORTLAND_STORE}`;
+    const res = await axios.get(URL, {
+      headers: { "Cache-Control": "no-cache" },
+    });
+    return res.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+export default getServerSideProps;
 
 //const URL=`${process.env.ADMIN_CONTAINER_HOST}/api/${process.env.PORTLAND_STORE}`;
 //const fetchWithRetry = async (url:string, options:any, n:number) => {
@@ -42,8 +40,8 @@ import axios from "axios";
 
 //const getServerSideProps = async (): Promise<any> => {
 //  try {
-    // const res = await axios.get(URL, { headers: { 'Cache-Control': 'no-cache' } });
-    // return res.data;
+// const res = await axios.get(URL, { headers: { 'Cache-Control': 'no-cache' } });
+// return res.data;
 //    const res = await fetchWithRetry(URL, {cache: "no-store"}, 5);
 //    console.log(res.json())
 //    return res.json();
