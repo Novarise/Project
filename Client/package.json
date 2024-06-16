@@ -35,7 +35,7 @@
     "drawer": "^0.0.2",
     "lucide-react": "^0.284.0",
     "msw": "^2.2.11",
-    "next": "13.5.4",
+    "next": "^14.2.3",
     "next-themes": "^0.3.0",
     "node-fetch": "^3.3.2",
     "query-string": "^8.1.0",
