@@ -1,4 +1,35 @@
 {
-  "extends": "next/core-web-vitals"
+  // "extends": "next/core-web-vitals"
+    "extends": ["airbnb", "plugin:react/recommended", "plugin:prettier/recommended"],
+    "plugins": ["react", "react-hooks"],
+    "env": {
+      "browser": true,
+      "node": true,
+      "es6": true
+    },
+    "rules": {
+      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn",
+      "no-multi-spaces": "error",
+      "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0 }],
+      "spaced-comment": ["error", "always", { "exceptions": ["-", "+"] }],
+      "line-comment-position": ["error", { "position": "above" }],
+      "camelcase": "error",
+      "filenames/match-regex": [2, "^[a-z]+([a-z0-9]+)*$", true],
+      "require-jsdoc": "error"
+    },
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    },
+    "parserOptions": {
+      "ecmaVersion": 2020,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    }
+    // "parser": "babel-eslint"
 }
-

@@ -21,9 +21,10 @@ const ProductPage: React.FC<ProductPageProps> = async ({
       categoryId: product?.ProductDoc[0].categoryId._id,
       isFeatured:true,
     });
-  if (!product) {
-    return null;
-  }
+
+    if (!product) {
+      return null;
+    }
 
   return (
     <div className="">

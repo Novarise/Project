@@ -8,9 +8,8 @@ import { useRouter } from "next/navigation";
 import Currency  from "@/components/ui/currency";
 import IconButton  from "@/components/ui/icon-button";
 import { Product } from "@/types";
-import useCart from "@/hook/use-cart";
-import usePreviewModal from "@/hook/use-preview-modal";
-import { Button } from "./button";
+import useCart from "@/hooks/use-cart";
+import usePreviewModal from "@/hooks/use-preview-modal";
 
 interface ProductCard {
   data: Product
@@ -27,12 +26,12 @@ const ProductCard: React.FC<ProductCard> = ({
     router.push(`/product/${data?._id}`);
   };
 
-  const onPreview: MouseEventHandler<HTMLButtonElement> = (event) => {
+  const handlePreview: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.stopPropagation();
     previewModal.onOpen(data);
   };
 
-  const onAddToCart: MouseEventHandler<HTMLButtonElement> = (event) => {
+  const handleAddToCart: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.stopPropagation();
     cart.addItem(data);
   };
@@ -53,12 +52,12 @@ const ProductCard: React.FC<ProductCard> = ({
           <div className="flex gap-x-6 justify-center">
             <IconButton
               className="bg-gray-100" 
-              onClick={onPreview} 
+              onClick={handlePreview} 
               icon={<Expand size={20} className="text-gray-600" />}
             />
             <IconButton
             className="bg-gray-100"
-              onClick={onAddToCart} 
+              onClick={handleAddToCart} 
               icon={<ShoppingCart size={20} className="text-gray-600" />} 
             />
             

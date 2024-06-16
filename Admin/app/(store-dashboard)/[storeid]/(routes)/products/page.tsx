@@ -1,23 +1,17 @@
-import { Product } from "@/models/Products";
-import { format } from "date-fns";
+import { Product } from '@/models/Products';
+import { format } from 'date-fns';
 
-import { formatter } from "@/lib/utils";
-import { ProductsClient } from "./components/client";
-import { ProductColumn } from "./components/columns";
-import { Property } from "@/models/Property";
-import { Category } from "@/models/Category"
-const ProductsPage = async ({
-  params
-}: {
-  params: { storeid: string }
-}) => {
+import { formatter } from '@/lib/utils';
+import { ProductsClient } from './components/client';
+import { ProductColumn } from './components/columns';
+import { Property } from '@/models/Property';
+import { Category } from '@/models/Category';
+const ProductsPage = async ({ params }: { params: { storeid: string } }) => {
+  const products = await Product.find({ storeId: params.storeid }).populate({
+    path: 'categoryId',
+    model: Category,
+  });
 
-  const products = await Product.find({ storeId: params.storeid })
-    .populate({
-      path: 'categoryId',
-      model: Category,
-    })
-    
   const formattedProducts: ProductColumn[] = [];
 
   products.forEach((item) => {
@@ -32,24 +26,21 @@ const ProductsPage = async ({
           category: item.categoryId?.name,
           detail: detail,
           createdAt: format(item.createdAt, 'MMMM do, yyyy'),
-          size: detail?.dynamicProperties.Size
-
+          size: detail?.dynamicProperties.Size,
         });
       });
     } else {
-      formattedProducts.push(
-        {
-          id: item._id,
-          name: item.name,
-          isFeatured: item.isFeatured,
-          isArchived: item.isArchived,
-          price: formatter.format(item.price),
-          category: item.categoryId?.name,
-          createdAt: format(item.createdAt, 'MMMM do, yyyy'),
-          detail: {},
-          size: ""
-        }
-      );
+      formattedProducts.push({
+        id: item._id,
+        name: item.name,
+        isFeatured: item.isFeatured,
+        isArchived: item.isArchived,
+        price: formatter.format(item.price),
+        category: item.categoryId?.name,
+        createdAt: format(item.createdAt, 'MMMM do, yyyy'),
+        detail: {},
+        size: '',
+      });
     }
   });
 

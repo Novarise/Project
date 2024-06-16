@@ -2,7 +2,7 @@
 
 import { render, screen } from '@testing-library/react'
 import CartPage from '@/app/(routes)/cart/page'
-import useCart from '@/hook/use-cart'
+import useCart from '@/hooks/use-cart'
 import '@testing-library/jest-dom'
 
 jest.mock('@/hook/use-cart', () => ({

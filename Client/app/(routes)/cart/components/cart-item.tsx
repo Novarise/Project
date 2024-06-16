@@ -5,7 +5,7 @@ import { X, Plus, Minus } from "lucide-react";
 import IconButton from "@/components/ui/icon-button";
 import Currency from "@/components/ui/currency";
 import { Product } from "@/types";
-import useCart from "@/hook/use-cart";
+import useCart from "@/hooks/use-cart";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";

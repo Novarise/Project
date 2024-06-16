@@ -1,26 +1,28 @@
 import { Product } from "@/types";
 import qs from "query-string";
 
-const URL=`${process.env.NEXT_PUBLIC_API_URL}/products`;
+const BASE_URL = `${process.env.NEXT_PUBLIC_API_URL}/products`;
 
-interface Query {
+interface QueryParams {
   categoryId?: string;
   isFeatured?: boolean;
   isArchived?: boolean;
 }
 
-const getProducts = async (query: Query): Promise<any> => {
+const getProducts = async (queryParams: QueryParams): Promise<any> => {
   const url = qs.stringifyUrl({
-    url: URL,
+    url: BASE_URL,
     query: { 
-      isFeatured: query.isFeatured,
-      isArchived: query.isArchived,
-      categoryId: query.categoryId,
+      isFeatured: queryParams.isFeatured,
+      isArchived: queryParams.isArchived,
+      categoryId: queryParams.categoryId,
     },
   });
-  const res = await fetch(url, {cache: "no-store"});
-
-  return res.json();
+  const response = await fetch(url, { cache: "no-store" });
+  if (!response.ok) {
+    throw new Error("Failed to fetch products");
+  }
+  return response.json();
 };
 
 export default getProducts;

@@ -1,25 +1,25 @@
-import Stripe from "stripe"
-import { headers } from "next/headers"
-import { NextResponse } from "next/server"
+import Stripe from 'stripe';
+import { headers } from 'next/headers';
+import { NextResponse } from 'next/server';
 
-import { stripe } from "@/lib/stripe"
-import { Order } from "@/models/Orders"
-import { Product } from "@/models/Products"
+import { stripe } from '@/lib/stripe';
+import { Order } from '@/models/Orders';
+import { Product } from '@/models/Products';
 
 export async function POST(req: Request) {
-  const body = await req.text()
-  const signature = headers().get("Stripe-Signature") as string
+  const body = await req.text();
+  const signature = headers().get('Stripe-Signature') as string;
 
-  let event: Stripe.Event
+  let event: Stripe.Event;
 
   try {
     event = stripe.webhooks.constructEvent(
       body,
       signature,
-      process.env.STRIPE_WEBHOOK_SECRET!
-    )
+      process.env.STRIPE_WEBHOOK_SECRET!,
+    );
   } catch (error: any) {
-    return new NextResponse(`Webhook Error: ${error.message}`, { status: 400 })
+    return new NextResponse(`Webhook Error: ${error.message}`, { status: 400 });
   }
 
   const session = event.data.object as Stripe.Checkout.Session;
@@ -31,17 +31,15 @@ export async function POST(req: Request) {
     address?.city,
     address?.state,
     address?.postal_code,
-    address?.country
+    address?.country,
   ];
 
   const addressString = addressComponents.filter((c) => c !== null).join(', ');
 
-
-  if (event.type === "checkout.session.completed") {
-
+  if (event.type === 'checkout.session.completed') {
     const orderId = session?.metadata?.orderId;
     const phone = session?.customer_details?.phone || '';
-    
+
     // Update the order
     const order = await Order.findByIdAndUpdate(
       orderId,
@@ -52,28 +50,23 @@ export async function POST(req: Request) {
           phone: phone,
         },
       },
-      { new: true } // This option returns the updated document
+      { new: true }, // This option returns the updated document
     ).populate('orderItems');
-    
+
     // Get the productIds
-    const productIds = order.orderItems.map(async (orderItem:any) => {
-        const productId = orderItem.productId;
-        const product = await Product.findById(productId);
-        console.log(product)
-        if (product) {
-            product.detail.forEach((detail:any) => {
-                if (detail._id.toString() === orderItem.detailId) {
-                    detail.in_stock -= orderItem.quantity;
-                }
-            });
-            await product.save();
+    const productIds = order.orderItems.map(async (orderItem: any) => {
+      const productId = orderItem.productId;
+      const product = await Product.findById(productId);
+      console.log(product);
+      if (product) {
+        product.detail.forEach((detail: any) => {
+          if (detail._id.toString() === orderItem.detailId) {
+            detail.in_stock -= orderItem.quantity;
           }
+        });
+        await product.save();
+      }
     });
-    
-    
-
-
-
 
     // const order = await prismadb.order.update({
     //   where: {
@@ -104,4 +97,4 @@ export async function POST(req: Request) {
   }
 
   return new NextResponse(null, { status: 200 });
-};
+}

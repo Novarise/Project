@@ -1,9 +1,5 @@
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,16 +9,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { signOut, useSession } from "next-auth/react"
-import { redirect, useParams, useRouter } from "next/navigation"
-
-
+} from '@/components/ui/dropdown-menu';
+import { signOut, useSession } from 'next-auth/react';
+import { redirect, useParams, useRouter } from 'next/navigation';
 
 export function UserNav() {
-  const router = useRouter()
-  const params = useParams()
-  const {data: session} = useSession()
+  const router = useRouter();
+  const params = useParams();
+  const { data: session } = useSession();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -36,7 +30,9 @@ export function UserNav() {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">{session?.user.name}</p>
+            <p className="text-sm font-medium leading-none">
+              {session?.user.name}
+            </p>
             <p className="text-xs leading-none text-muted-foreground">
               {session?.user.email}
             </p>
@@ -48,11 +44,17 @@ export function UserNav() {
             Profile
             <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuItem onSelect={() => router.push(`/${params.storeid}/usersettings/account`)}>
+          <DropdownMenuItem
+            onSelect={() =>
+              router.push(`/${params.storeid}/usersettings/account`)
+            }
+          >
             Billing
             <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuItem onSelect={() => router.push(`/${params.storeid}/usersettings`)}>
+          <DropdownMenuItem
+            onSelect={() => router.push(`/${params.storeid}/usersettings`)}
+          >
             Settings
             <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
           </DropdownMenuItem>
@@ -65,5 +67,5 @@ export function UserNav() {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

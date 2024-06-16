@@ -1,12 +1,8 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { NextRequest, NextResponse } from "next/server";
-
-import { getServerSession } from "next-auth";
-
-import { authOptions } from "@/app/api/auth/[...nextauth]/options"
-import { mongooseConnect } from "@/lib/mongoose";
-import {User} from "@/models/User";
-
+import { NextApiRequest, NextApiResponse } from 'next';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/api/auth/[...nextauth]/options';
+import { mongooseConnect } from '@/lib/mongoose';
+import { User } from '@/models/User';
 
 const serverAuth = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getServerSession(req, res, authOptions);
@@ -16,14 +12,13 @@ const serverAuth = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   await mongooseConnect();
-  const currentUser = await User.findOne({email:session.user.user.email,});
-  
-  
+  const currentUser = await User.findOne({ email: session.user.user.email });
+
   if (!currentUser) {
     throw new Error('Not signed in');
   }
 
   return { currentUser };
-}
+};
 
 export default serverAuth;

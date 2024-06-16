@@ -1,30 +1,28 @@
-"use client";
+'use client';
 
-import axios from "axios";
-import { Copy, Edit, MoreHorizontal, Trash, SquarePlus } from "lucide-react";
-import { useParams, useRouter } from "next/navigation";
-import { useState } from "react";
-import { toast } from "react-hot-toast";
+import axios from 'axios';
+import { Copy, Edit, MoreHorizontal, Trash, SquarePlus } from 'lucide-react';
+import { useParams, useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { toast } from 'react-hot-toast';
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu";
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
-import { ProductColumn } from "./columns";
-import { AlertModal } from "@/components/ui/modals/alert-modal";
+import { ProductColumn } from './columns';
+import { AlertModal } from '@/components/ui/modals/alert-modal';
 
 interface CellActionProps {
   data: ProductColumn;
 }
 
-export const CellAction: React.FC<CellActionProps> = ({
-  data,
-}) => {
+export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const router = useRouter();
@@ -47,7 +45,7 @@ export const CellAction: React.FC<CellActionProps> = ({
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
     toast.success('Product ID copied to clipboard.');
-  }
+  };
 
   return (
     <>
@@ -66,24 +64,24 @@ export const CellAction: React.FC<CellActionProps> = ({
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <DropdownMenuItem
-            onClick={() => onCopy(data.id)}
-          >
+          <DropdownMenuItem onClick={() => onCopy(data.id)}>
             <Copy className="mr-2 h-4 w-4" /> Copy Id
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() => router.push(`/${params.storeid}/products/${data.id}_new`)}
+            onClick={() =>
+              router.push(`/${params.storeid}/products/${data.id}_new`)
+            }
           >
             <SquarePlus className="mr-2 h-4 w-4" /> Add Item
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() => router.push(`/${params.storeid}/products/${data.id}`)}
+            onClick={() =>
+              router.push(`/${params.storeid}/products/${data.id}`)
+            }
           >
             <Edit className="mr-2 h-4 w-4" /> Update
           </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => setOpen(true)}
-          >
+          <DropdownMenuItem onClick={() => setOpen(true)}>
             <Trash className="mr-2 h-4 w-4" /> Delete
           </DropdownMenuItem>
         </DropdownMenuContent>
