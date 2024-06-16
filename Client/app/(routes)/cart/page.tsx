@@ -3,10 +3,9 @@
 import { useEffect, useState } from 'react';
 
 import Container from '@/components/ui/container';
-
 import Summary from './components/summary'
 import CartItem from './components/cart-item';
-import useCart from '@/hook/use-cart';
+import useCart from '@/hooks/use-cart';
 
 export const revalidate = 0;
 
@@ -24,9 +23,10 @@ const CartPage = () => {
   const cart = useCart();
   const [total, setTotal] = useState(0);
   const [cartItems, setCartItems] = useState<CartItemData[]>([]);
+
   const updateTotal = (itemTotal: number) => {
     if(itemTotal == 0){
-      setTotal((prevTotal) => 0);
+      setTotal(0);
     }else{
       setTotal((prevTotal) => prevTotal + itemTotal);
     }
@@ -41,7 +41,6 @@ const CartPage = () => {
     });
   };
   
-
   useEffect(() => {
     setIsMounted(true);
 
@@ -49,7 +48,8 @@ const CartPage = () => {
 
   if (!isMounted) {
     return null;
-  }
+  };
+  
   return (
     <div className="light:bg-white">
       <Container>

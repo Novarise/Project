@@ -1,16 +1,15 @@
-import Link from "next/link"
+import Link from 'next/link';
 
-import { cn } from "@/lib/utils"
-import { useParams, usePathname } from "next/navigation"
+import { cn } from '@/lib/utils';
+import { useParams, usePathname } from 'next/navigation';
 
 export function MainNav({
   className,
   ...props
 }: React.HTMLAttributes<HTMLElement>) {
-  
   const pathname = usePathname();
   const params = useParams();
-  
+
   const routes = [
     {
       href: `/${params.storeid}`,
@@ -57,29 +56,34 @@ export function MainNav({
       label: 'Preferences',
       active: pathname === `/${params.storeid}/preferences`,
     },
-  ]
+  ];
 
   return (
-  
-  <>
-    {routes.map((route) => (
-      <li key={route.href} className={cn(
-        'text-sm font-medium transition-colors hover:text-primary',
-        route.active ? 'text-black dark:text-white' : 'text-muted-foreground'
-      )}>
-        <Link
+    <>
+      {routes.map((route) => (
+        <li
           key={route.href}
-          href={route.href}
           className={cn(
             'text-sm font-medium transition-colors hover:text-primary',
-            route.active ? 'text-black dark:text-white' : 'text-muted-foreground'
+            route.active
+              ? 'text-black dark:text-white'
+              : 'text-muted-foreground',
           )}
         >
-          {route.label}
-      </Link>
-      </li>
-    ))}
-  </>
-  
-  )
+          <Link
+            key={route.href}
+            href={route.href}
+            className={cn(
+              'text-sm font-medium transition-colors hover:text-primary',
+              route.active
+                ? 'text-black dark:text-white'
+                : 'text-muted-foreground',
+            )}
+          >
+            {route.label}
+          </Link>
+        </li>
+      ))}
+    </>
+  );
 }

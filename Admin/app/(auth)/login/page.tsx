@@ -1,11 +1,10 @@
 'use client';
 
-import { Metadata } from "next"
-import Image from "next/image"
-import Link from "next/link"
+import { Metadata } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
 
-import { cn } from "@/lib/utils"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -13,43 +12,38 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useEffect, useState } from "react"
-import { signIn, useSession } from "next-auth/react";
-import { redirect, useRouter, useSearchParams } from "next/navigation";
+} from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useState } from 'react';
+import { signIn } from 'next-auth/react';
+import { useRouter, useSearchParams } from 'next/navigation';
 
-// export const metadata: Metadata = {
-//   title: "Authentication",
-//   description: "Authentication forms built using the components.",
-// }
+export const metadata: Metadata = {
+  title: "Authentication",
+  description: "Authentication forms built using the components.",
+}
 
 export default function AuthenticationPage() {
-  
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const searchParams = useSearchParams()
-    const router = useRouter()
-    const callbackUrl = searchParams.get('callbackUrl') || '/'
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const callbackUrl = searchParams.get('callbackUrl') || '/';
 
-    const onSubmit = async () => {
-      
-      const result = await signIn("credentials", {
-        email: email,
-        password: password,
-        redirect: false,
-        callbackUrl
-      });
-      if (!result?.error) {
-        router.push(callbackUrl)
-      }
-    };
-    
+  const handleSubmit = async () => {
+    const result = await signIn('credentials', {
+      email: email,
+      password: password,
+      redirect: false,
+      callbackUrl,
+    });
+    if (!result?.error) {
+      router.push(callbackUrl);
+    }
+  };
 
-  
-    
   return (
     <>
       <div className="md:hidden">
@@ -99,69 +93,68 @@ export default function AuthenticationPage() {
         </div>
         <div className="lg:p-8">
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 lg:max-w-lg">
-              <Card>
-                <CardHeader className="space-y-1">
-                  <CardTitle className="text-2xl text-center">
-                    Sign in
-                  </CardTitle>
-                  <CardDescription className="text-center">
-                    Enter your email and password to login
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="grid gap-4">
-                  <div className="grid gap-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input 
-                        id="email" 
-                        type="email" 
-                        placeholder="" 
-                        value={email}
-                        onChange={(ev) => setEmail(ev.target.value)}
-                        />
-                  </div>
-                  <div className="grid gap-2">
-                    <Label htmlFor="password">Password</Label>
-                    <Input 
-                        id="password" 
-                        type="password" 
-                        value={password}
-                        onChange={(ev) => setPassword(ev.target.value)}
-                    />
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Checkbox id="terms" />
-                    <label
-                      htmlFor="terms"
-                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    >
-                      Remember me
-                    </label>
-                  </div>
-                </CardContent>
-                <CardFooter className="flex flex-col">
-                  <Button className="w-full" onClick={onSubmit}>
-                    Login
-                  </Button>
-                  <p className="mt-2 text-xs text-center text-gray-700">
-                  {" "}
-                    Do not have an account?{" "}
-                    <Link className=" text-blue-600 hover:cursor-pointer" href={'/register'}>
-                      Sign up
-                    </Link>
-                  </p>
-                </CardFooter>
-              </Card>
-            
-
+            <Card>
+              <CardHeader className="space-y-1">
+                <CardTitle className="text-2xl text-center">Sign in</CardTitle>
+                <CardDescription className="text-center">
+                  Enter your email and password to login
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="grid gap-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder=""
+                    value={email}
+                    onChange={(ev) => setEmail(ev.target.value)}
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="password">Password</Label>
+                  <Input
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(ev) => setPassword(ev.target.value)}
+                  />
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Checkbox id="terms" />
+                  <label
+                    htmlFor="terms"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    Remember me
+                  </label>
+                </div>
+              </CardContent>
+              <CardFooter className="flex flex-col">
+                <Button className="w-full" onClick={handleSubmit}>
+                  Login
+                </Button>
+                <p className="mt-2 text-xs text-center text-gray-700">
+                  {' '}
+                  Do not have an account?{' '}
+                  <Link
+                    className=" text-blue-600 hover:cursor-pointer"
+                    href={'/register'}
+                  >
+                    Sign up
+                  </Link>
+                </p>
+              </CardFooter>
+            </Card>
             <p className="px-8 text-center text-sm text-muted-foreground">
-              By clicking continue, you agree to our{" "}
+              By clicking continue, you agree to our{' '}
               <Link
                 href="/terms"
                 className="underline underline-offset-4 hover:text-primary"
               >
                 Terms of Service
-              </Link>{" "}
-              and{" "}
+              </Link>{' '}
+              and{' '}
               <Link
                 href="/privacy"
                 className="underline underline-offset-4 hover:text-primary"
@@ -174,5 +167,5 @@ export default function AuthenticationPage() {
         </div>
       </div>
     </>
-  )
+  );
 }

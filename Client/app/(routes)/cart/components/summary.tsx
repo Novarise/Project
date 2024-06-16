@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 
 import Currency from "@/components/ui/currency";
 import { toast } from "react-hot-toast";
-import useCart from "@/hook/use-cart";
+import useCart from "@/hooks/use-cart";
 import { Button } from "@/components/ui/button";
 
 interface Props {

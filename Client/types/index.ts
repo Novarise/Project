@@ -5,9 +5,7 @@ interface DynamicProperties {
 export interface Product {
     _id?: string | undefined;
     storeId: string;
-    // store: Store;
     categoryId: string   
-    // category: Category  
     name: string
     price: number
     isFeatured: boolean  
@@ -23,7 +21,6 @@ export interface Product {
     productId: string 
     product: Product  
     url: string
-  
   }
 
   export interface Billboard {
@@ -33,7 +30,6 @@ export interface Product {
     storeId: string
     store: Store
     categories:Category[]
-   
 }
 
 export interface Store {
@@ -48,7 +44,4 @@ export interface Category{
     storeId: string;
     store: Store;
     billboardId: string;
-    // billboard: Billboard
-    // products: Products[]
-
 }

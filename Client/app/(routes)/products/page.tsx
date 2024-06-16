@@ -4,10 +4,9 @@ import Container from '@/components/ui/container';
 import React from 'react'
 
 const ProductsPage = async () => {
-    // const products = await getProducts({ isArchived: false });
-    // const productsDoc = products.ProductDoc
   const Store = await getServerSideProps()
   const { products } = Store.StoreDoc
+  
   return (
     <Container>
       <div className="space-y-10 pb-10 pt-5">

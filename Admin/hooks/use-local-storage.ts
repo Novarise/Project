@@ -1,13 +1,18 @@
-
 type StorageType = 'session' | 'local';
 type UseStorageReturnValue = {
   getItem: (key: string, type?: StorageType) => string | null;
-  setItem: (key: string, value: string, expirationMinutes?: number, type?: StorageType) => boolean;
+  setItem: (
+    key: string,
+    value: string,
+    expirationMinutes?: number,
+    type?: StorageType,
+  ) => boolean;
   removeItem: (key: string, type?: StorageType) => void;
 };
 
 const useStorage = (): UseStorageReturnValue => {
-  const storageType = (type?: StorageType): 'localStorage' | 'sessionStorage' => `${type ?? 'session'}Storage`;
+  const storageType = (type?: StorageType): 'localStorage' | 'sessionStorage' =>
+    `${type ?? 'session'}Storage`;
 
   const isBrowser: boolean = ((): boolean => typeof window !== 'undefined')();
 
@@ -20,7 +25,7 @@ const useStorage = (): UseStorageReturnValue => {
     // Parse the stored item to check for expiration
     const parsedItem = JSON.parse(item);
 
-    if (parsedItem && parsedItem.expiration && new Date() > new Date(parsedItem.expiration)) {
+    if (parsedItem?.expiration && new Date() > new Date(parsedItem.expiration)) {
       // Item has expired, remove it and return null
       removeItem(key, type);
       return null;
@@ -29,10 +34,18 @@ const useStorage = (): UseStorageReturnValue => {
     return parsedItem.value;
   };
 
-  const setItem = (key: string, value: string, expirationMinutes: number = 0, type?: StorageType): boolean => {
+  const setItem = (
+    key: string,
+    value: string,
+    expirationMinutes: number = 0,
+    type?: StorageType,
+  ): boolean => {
     if (!isBrowser) return false;
 
-    const expiration = expirationMinutes > 0 ? new Date().getTime() + expirationMinutes * 60000 : null;
+    const expiration =
+      expirationMinutes > 0
+        ? new Date().getTime() + expirationMinutes * 60000
+        : null;
     const itemToStore = JSON.stringify({ value, expiration });
 
     window[storageType(type)].setItem(key, itemToStore);

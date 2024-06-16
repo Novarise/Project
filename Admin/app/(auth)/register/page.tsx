@@ -1,11 +1,11 @@
 'use client';
 
-import { Metadata } from "next"
-import Image from "next/image"
-import Link from "next/link"
+import { Metadata } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
 
-import { cn } from "@/lib/utils"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { cn } from '@/lib/utils';
+import { Button, buttonVariants } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -13,14 +13,12 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useState, SyntheticEvent } from "react";
-import axios from 'axios'
-import { useRouter } from 'next/navigation'
- 
-
+} from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useState, SyntheticEvent } from 'react';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 // export const metadata: Metadata = {
 //   title: "Authentication",
@@ -32,37 +30,38 @@ export default function SignUpWithImage() {
     name: string;
     email: string;
     password: string;
-    role: string
+    role: string;
   }
 
-  const router = useRouter()
-
+  const router = useRouter();
   const [formData, setFormData] = useState<FormData>({
-    name: "",
-    email: "",
-    password: "",
-    role:""
+    name: '',
+    email: '',
+    password: '',
+    role: '',
   });
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [event.target.name]: event.target.value })
-  }
+  const [loading, setLoading] = useState(false);
   
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false)
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
+  };
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    setLoading(true)
-    const apiRes = await axios.post("http://localhost:3000/api/auth/register", formData)
+    setLoading(true);
+    const apiRes = await axios.post(
+      'http://localhost:3000/api/auth/register',
+      formData,
+    );
     if (apiRes?.data?.success) {
-      router.push("/login")
-    }else{
-      console.log("Not authenticated");
+      router.push('/login');
+    } else {
+      console.log('Not authenticated');
     }
-    setLoading(false)
-    console.log(apiRes)
+    setLoading(false);
   };
+  
   return (
     <>
       <div className="md:hidden">
@@ -85,8 +84,8 @@ export default function SignUpWithImage() {
         <Link
           href="/examples/authentication"
           className={cn(
-            buttonVariants({ variant: "ghost" }),
-            "absolute right-4 top-4 md:right-8 md:top-8"
+            buttonVariants({ variant: 'ghost' }),
+            'absolute right-4 top-4 md:right-8 md:top-8',
           )}
         >
           Login
@@ -132,68 +131,67 @@ export default function SignUpWithImage() {
                 </CardDescription>
               </CardHeader>
               <form onSubmit={handleSubmit}>
-              <CardContent className="grid gap-4">
-                <div className="grid gap-2">
-                  <Label htmlFor="name">Name</Label>
-                  <Input 
-                    id="name" 
-                    type="text" 
-                    placeholder=""
-                    value={formData.name}
-                    name="name"
-                    onChange={handleInputChange} 
+                <CardContent className="grid gap-4">
+                  <div className="grid gap-2">
+                    <Label htmlFor="name">Name</Label>
+                    <Input
+                      id="name"
+                      type="text"
+                      placeholder=""
+                      value={formData.name}
+                      name="name"
+                      onChange={handleInputChange}
                     />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input 
-                    id="email" 
-                    type="email" 
-                    placeholder="" 
-                    value={formData.email}
-                    name="email"
-                    onChange={handleInputChange}
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder=""
+                      value={formData.email}
+                      name="email"
+                      onChange={handleInputChange}
                     />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="password">Password</Label>
-                  <Input 
-                    id="password" 
-                    type="password"
-                    value={formData.password}
-                    name="password"
-                    onChange={handleInputChange} 
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="password">Password</Label>
+                    <Input
+                      id="password"
+                      type="password"
+                      value={formData.password}
+                      name="password"
+                      onChange={handleInputChange}
                     />
-                </div>
-                <span className=" text-blue-600 hover:underline text-sm">
-                  Forget password ?
-                </span>
-              </CardContent>
-              <CardFooter className="flex flex-col">
-                <Button className="w-full" disabled={loading}>
-                  Sign Up
-                </Button>
-                <p className="mt-2 text-xs text-center text-gray-700">
-                  {" "}
-                  Already have an account?{" "}
-                  <span className=" text-blue-600 hover:underline">
-                    Sign In
+                  </div>
+                  <span className=" text-blue-600 hover:underline text-sm">
+                    Forget password ?
                   </span>
-                </p>
-              </CardFooter>
+                </CardContent>
+                <CardFooter className="flex flex-col">
+                  <Button className="w-full" disabled={loading}>
+                    Sign Up
+                  </Button>
+                  <p className="mt-2 text-xs text-center text-gray-700">
+                    {' '}
+                    Already have an account?{' '}
+                    <span className=" text-blue-600 hover:underline">
+                      Sign In
+                    </span>
+                  </p>
+                </CardFooter>
               </form>
-
             </Card>
 
             <p className="px-8 text-center text-sm text-muted-foreground">
-              By clicking continue, you agree to our{" "}
+              By clicking continue, you agree to our{' '}
               <Link
                 href="/terms"
                 className="underline underline-offset-4 hover:text-primary"
               >
                 Terms of Service
-              </Link>{" "}
-              and{" "}
+              </Link>{' '}
+              and{' '}
               <Link
                 href="/privacy"
                 className="underline underline-offset-4 hover:text-primary"
@@ -206,5 +204,5 @@ export default function SignUpWithImage() {
         </div>
       </div>
     </>
-  )
+  );
 }

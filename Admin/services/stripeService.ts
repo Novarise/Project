@@ -1,6 +1,5 @@
 import Stripe from 'stripe';
-import { stripe } from "@/lib/stripe";
-
+import { stripe } from '@/lib/stripe';
 
 interface CartItem {
   quantity: number;
@@ -15,17 +14,18 @@ interface CreateCheckoutSessionData {
   orderId: string;
 }
 
-export async function createStripeCheckoutSession(data: CreateCheckoutSessionData) {
+export async function createStripeCheckoutSession(
+  data: CreateCheckoutSessionData,
+) {
   const { cartItems, successUrl, cancelUrl } = data;
 
-
-  const lineItems = cartItems.map((item:CartItem) => ({
+  const lineItems = cartItems.map((item: CartItem) => ({
     price_data: {
-      currency: 'USD', 
+      currency: 'USD',
       product_data: {
-        name: item.name, 
+        name: item.name,
       },
-      unit_amount: item.price * 100, 
+      unit_amount: item.price * 100,
     },
     quantity: item.quantity,
   }));
@@ -45,7 +45,6 @@ export async function createStripeCheckoutSession(data: CreateCheckoutSessionDat
       orderId: data.orderId,
     },
   });
-  
 
   return session;
 }

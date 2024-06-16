@@ -1,32 +1,36 @@
-"use client";
+'use client';
 
-import { ChevronsDown, ChevronsUp, ChevronsUpDown, Plus, Trash } from "lucide-react";
-import { useParams, useRouter } from "next/navigation";
+import {
+  ChevronsDown,
+  ChevronsUp,
+  ChevronsUpDown,
+  Plus,
+  Trash,
+} from 'lucide-react';
+import { useParams, useRouter } from 'next/navigation';
 
-import { Button } from "@/components/ui/button";
-import { Heading } from "@/components/ui/heading";
-import { Separator } from "@/components/ui/separator";
+import { Button } from '@/components/ui/button';
+import { Heading } from '@/components/ui/heading';
+import { Separator } from '@/components/ui/separator';
 
-import { columns, PropertyColumn } from "./columns";
-import { DataTable } from "@/components/ui/data-table";
-import { Billboard, Category } from "@/types";
-import { ModalAction } from "./modal-action";
-
+import { columns, PropertyColumn } from './columns';
+import { DataTable } from '@/components/ui/data-table';
+import { Billboard, Category } from '@/types';
+import { ModalAction } from './modal-action';
 
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible"
-import { useState } from "react";
-import { AlertModal } from "@/components/ui/modals/alert-modal";
-import axios from "axios";
-import toast from "react-hot-toast";
-
+} from '@/components/ui/collapsible';
+import { useState } from 'react';
+import { AlertModal } from '@/components/ui/modals/alert-modal';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 interface CategoriesClientProps {
   // data: PropertyColumn[];
-  srcData: any
+  srcData: any;
 }
 
 function isEmpty(obj: any) {
@@ -56,12 +60,14 @@ export const PropertyClient: React.FC<CategoriesClientProps> = ({
   };
 
   const onDelete = async (index: any) => {
-    const propertyID = srcData[index]._id
+    const propertyID = srcData[index]._id;
     try {
       setLoading(true);
-      await axios.delete(`/api/${params.storeid}/properties?propertyID=${propertyID}`);
+      await axios.delete(
+        `/api/${params.storeid}/properties?propertyID=${propertyID}`,
+      );
       router.refresh();
-      window.location.reload()
+      window.location.reload();
       // router.push(`/${params.storeId}/billboards`);
       toast.success('Property deleted.');
     } catch (error: any) {
@@ -70,7 +76,7 @@ export const PropertyClient: React.FC<CategoriesClientProps> = ({
       setLoading(false);
       setOpen(false);
     }
-  }
+  };
 
   const handleOpenChange = (index: number) => {
     if (openSectionIndex === index) {
@@ -100,8 +106,8 @@ export const PropertyClient: React.FC<CategoriesClientProps> = ({
       {Array.from({ length: numIterations }).map((_, index) => {
         let rows = srcData[index].values;
         rows.map((row: any) => {
-          row['label'] = srcData[index].label
-        })
+          row['label'] = srcData[index].label;
+        });
 
         return (
           <div key={index}>
@@ -109,7 +115,8 @@ export const PropertyClient: React.FC<CategoriesClientProps> = ({
               isOpen={open}
               onClose={() => setOpen(false)}
               onConfirm={() => handleDeleteClick(IndexVal)}
-              loading={loading} />
+              loading={loading}
+            />
             <Collapsible
               open={openSectionIndex === index}
               onOpenChange={() => handleOpenChange(index)}
@@ -120,9 +127,12 @@ export const PropertyClient: React.FC<CategoriesClientProps> = ({
                 <Separator />
                 <div className="flex items-center justify-between space-x-4 px-4 w-full">
                   <div className="flex items-center justify-between">
-                    <Heading title={`${srcData[index].label} (${srcData[index].values.length})`}
+                    <Heading
+                      title={`${srcData[index].label} (${srcData[index].values.length})`}
                       description={`Manage ${srcData[index].label} for your store`}
-                      size="lg" weight="medium" />
+                      size="lg"
+                      weight="medium"
+                    />
                   </div>
                   <div className="flex justify-between items-center space-x-3">
                     <CollapsibleTrigger asChild>
@@ -134,13 +144,15 @@ export const PropertyClient: React.FC<CategoriesClientProps> = ({
                           <ChevronsDown className="h-4 w-4" />
                         )}
                       </Button>
-
                     </CollapsibleTrigger>
                     <Button
                       disabled={loading}
                       variant="destructive"
                       size="sm"
-                      onClick={() => { setOpen(true); setIndexVal(index); }}
+                      onClick={() => {
+                        setOpen(true);
+                        setIndexVal(index);
+                      }}
                     >
                       <Trash className="h-4 w-4" />
                     </Button>
@@ -154,9 +166,8 @@ export const PropertyClient: React.FC<CategoriesClientProps> = ({
               </>
             </Collapsible>
           </div>
-        )
-      }
-      )}
+        );
+      })}
     </>
   );
 };

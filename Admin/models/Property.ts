@@ -1,4 +1,4 @@
-import mongoose, { model, Schema, models } from "mongoose";
+import mongoose, { model, Schema, models } from 'mongoose';
 
 // Define the Property schema with necessary fields and references
 const PropertySchema = new Schema({

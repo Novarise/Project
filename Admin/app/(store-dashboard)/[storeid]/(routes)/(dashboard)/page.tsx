@@ -1,36 +1,29 @@
-import { Metadata } from "next"
-import Image from "next/image"
+import { Metadata } from 'next';
+import Image from 'next/image';
 
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs"
-import TeamSwitcher from "./components/team-switcher"
-import { MainNav } from "../../../../../components/ui/navbar/main-nav"
-import { UserNav } from "../../../../../components/ui/navbar/user-nav"
-import { Search } from "../../../../../components/ui/navbar/search"
-import { CalendarDateRangePicker } from "./components/date-range-picker"
-import { Overview } from "./components/overview"
-import { RecentSales } from "./components/recent-sales"
-
+} from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import TeamSwitcher from './components/team-switcher';
+import { MainNav } from '../../../../../components/ui/navbar/main-nav';
+import { UserNav } from '../../../../../components/ui/navbar/user-nav';
+import { Search } from '../../../../../components/ui/navbar/search';
+import { CalendarDateRangePicker } from './components/date-range-picker';
+import { Overview } from './components/overview';
+import { RecentSales } from './components/recent-sales';
 
 export const metadata: Metadata = {
-  title: "Dashboard",
-  description: "Example dashboard app built using the components.",
-}
+  title: 'Dashboard',
+  description: 'Example dashboard app built using the components.',
+};
 
 export default function DashboardPage() {
-  
   return (
     <>
       <div className="md:hidden">
@@ -211,5 +204,5 @@ export default function DashboardPage() {
         </div>
       </div>
     </>
-  )
+  );
 }
